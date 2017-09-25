@@ -88,9 +88,9 @@ function computeBabylonianTime() {
     for (var i = 0; i < 12; i++) {
         hour = new Date(hour.getTime() + babylonianDay.lDayHour);
         if (i < 6) {
-            part = 'after sunrise';
+            part = 'ASR';
         } else {
-            part = 'before sunset';
+            part = 'BST';
         }
         babylonianDay.dayHours[i] = {
             realtime: hour,
@@ -106,9 +106,9 @@ function computeBabylonianTime() {
     for (var i = 0; i < 12; i++) {
         hour = new Date(hour.getTime() + babylonianDay.lNightHour);
         if (i < 6) {
-            part = 'after sunset';
+            part = 'AST';
         } else {
-            part = 'before sunrise';
+            part = 'BSR';
         }
         babylonianDay.nightHours[i] = {
             realtime: hour,
