@@ -16,6 +16,8 @@ let babylonianDay = {
 
 }
 
+locationError = false;
+
 
 // Convert time storage over to minutes
 function toMinutes(hours, minutes) {
@@ -25,7 +27,9 @@ function toMinutes(hours, minutes) {
 
 function getGeoIp() {
     let url = 'https://freegeoip.net/json/'
-    fetch(url, { headers: {} })
+    fetch(url, {
+            headers: {}
+        })
         .then(
             function(response) {
                 if (response.status !== 200) {
@@ -45,6 +49,7 @@ function getGeoIp() {
         )
         .catch(function(err) {
             console.log('Location Fetch Error', err);
+            locationError = true;
         });
 
 }
@@ -54,7 +59,9 @@ function getSunriseSunset() {
     url = url + '?lat=' + locationData.latitude;
     url = url + '&lng=' + locationData.longitude;
     url = url + '&formatted=0';
-    fetch(url, { headers: {} })
+    fetch(url, {
+            headers: {}
+        })
         .then(
             function(response) {
                 if (response.status !== 200) {
@@ -139,6 +146,12 @@ window.onload = function() {
         part = "...";
 
         window.setInterval(function() {
+
+            if (locationError == true) {
+                document.getElementById('error') = "Error: Disable Adblocker";
+                return;
+            }
+
             // Get 'now'
             d = new Date();
 
@@ -153,6 +166,16 @@ window.onload = function() {
                         // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
                         gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                         hour = i;
+
+                        if (hour < 10) {
+                            hour = "0" + hour.toString();
+                        }
+                        if (ush < 10) {
+                            ush = "0" + ush.toString();
+                        }
+                        if (gar < 10) {
+                            gar = "0" + gar.toString();
+                        }
                         break;
                     }
                 }
@@ -161,20 +184,10 @@ window.onload = function() {
                 daytime = false;
 
             }
-            if (hour < 10) {
-                hour = "0" + hour.toString();
-            }
-            if (ush < 10) {
-                ush = "0" + ush.toString();
-            }
-            if (gar < 10) {
-                gar = "0" + gar.toString();
-            }
             document.getElementById("hour").innerHTML = hour;
             document.getElementById("ush").innerHTML = ush;
             document.getElementById("gar").innerHTML = gar;
             document.getElementById("part").innerHTML = part;
-
         }, 500);
 
     }
