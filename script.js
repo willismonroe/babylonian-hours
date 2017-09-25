@@ -18,11 +18,8 @@ let babylonianDay = {
 
 locationError = false;
 
-
-// Convert time storage over to minutes
-function toMinutes(hours, minutes) {
-    mins = hours * 60 + minutes;
-    return mins;
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 function getGeoIp() {
@@ -127,6 +124,10 @@ function computeBabylonianTime() {
             part: part,
         };
     };
+
+    document.getElementById('lDayHour').innerHTML = round(babylonianDay.lDayHour / 60000, 2);
+    document.getElementById('lNightHour').innerHTML = round(babylonianDay.lNightHour / 60000, 2);
+    document.getElementById('numberOfUsh').innerHTML = babylonianDay.dayHours[0].ush;
 
     console.log("Done setting up!");
 }

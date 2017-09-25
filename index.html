@@ -33,19 +33,42 @@
 			<p>
 				<h4>What is this?</h4>
 				<br>
-				This clock shows you your local time computed using a Babylonian system of reckoning.
+				Our units of time are defined by physical realities which do not change with the seasons.<a id="fn1-ref" href="#fn1">[1]</a>  That means that an hour is always the same length regardless of day, month, or year.  However, this form of time is dependant of technological developments which allow for precise measurements of the passage of time.  Prior to accurate time pieces, the passage of time through the day was often reckoned by a system of <em>seasonal hours</em>.  The basic method is to divide daylight into a number of equal length hours that can be roughly reckoned based on the position of sun in the sky.  Many different cultures and groups throughout history have made use of seasonal hours.
 				<br>
-				The Babylonians divided the day into four parts defined by the sunrise and sunset.  I've used those definitions here instead of AM/PM.  They are:
+				<br>
+				This clock shows you your local time computed using a Babylonian system of seasonal hours.  The are two different types of units of time in the Babylonian system, the first is set by homogenous phenomena, either astronomical (appearance of a star) or physical (water clock), the second is a seasonal system whereby the length of an hour changes depending on the length of daylight.  This clock makes use of both types of units.
+				<br>
+				<br>
+				The first number is the hour (<em>simanu</em>) of the day or night, the second unit is measured in UŠ, the third in GAR.
+				<ul>
+					<li>The length of a <em>simanu</em> (seasonal hour) is determined by dividing the length of local daylight by 12, or in the case of a night hour, dividing nightime by 12.<a id="fn2-ref" href="#fn2">[2]</a>  For your current location a seasonal daylight hour is equal to <span id="lDayHour"></span> minutes and a seasonal nighttime hour is equal to <span id="lNightHour"></span> minutes.</li>
+					<li>The length of an UŠ is set at aproximately four minutes and can be measured by a water clock.  For your current location there are <span id="numberOfUsh"></span> UŠ in a seasonal daylight hour.</li>
+					<li>The length of a GAR is set at aproximately four seconds (1/60th of an UŠ)</li>
+				</ul>
+				This clock is not quite accurate, because any reckoning done by seasonal hours would likely not involve smaller units of time.  But in order to create a more familiar clock I included the smaller units (UŠ and GAR) as well.  A hypothetical ancient Babylonian could use the UŠ and GAR measured by a water clock to determine the next seasonal hour.  Also it's important to note that the first unit in this clock has a range of 0-11 (like our own clocks) and the last unit also has a familiar range (0-59) the middle unit (UŠ) differs according to the length of the first unit.  To put it simply, do not use this clock for your normal day-to-day time calculation needs.
+				<br>
+				<br>
+				Finally, I include a short acronym much like our AM/PM.  The Babylonians divided the day into four parts defined by the sunrise and sunset.  They are:
 				<ul>
 					<li>ASR: after sunrise</li>
 					<li>BST: before sunset</li>
 					<li>AST: after sunset</li>
 					<li>BSR: before sunrise</li>
 				</ul>
+				<h4>Bibliography:</h4>
+				<div class="csl-bib-body" style="line-height: 1.35; margin-left: 2em; text-indent:-2em;">
+					<div class="csl-entry">Pingree, David, and Erica Reiner. “A Neo-Babylonian Report on Seasonal Hours.” <i>Archiv Für Orientforschung</i> 25 (1974): 50–55.</div>
+					<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=A%20Neo-Babylonian%20Report%20on%20Seasonal%20Hours&amp;rft.jtitle=Archiv%20f%C3%BCr%20Orientforschung&amp;rft.stitle=Archiv%20f%C3%BCr%20Orientforschung&amp;rft.volume=25&amp;rft.aufirst=David&amp;rft.aulast=Pingree&amp;rft.au=David%20Pingree&amp;rft.au=Erica%20Reiner&amp;rft.date=1974&amp;rft.pages=50-55&amp;rft.spage=50&amp;rft.epage=55&amp;rft.issn=0066-6440"></span>
+					<div class="csl-entry">Rochberg-Halton, F. “Babylonian Seasonal Hours.” <i>Centaurus</i> 32, no. 2 (July 1989): 146–70. doi:10.1111/j.1600-0498.1989.tb00843.x.</div>
+					<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1111%2Fj.1600-0498.1989.tb00843.x&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Babylonian%20Seasonal%20Hours&amp;rft.jtitle=Centaurus&amp;rft.volume=32&amp;rft.issue=2&amp;rft.aufirst=F.&amp;rft.aulast=Rochberg-Halton&amp;rft.au=F.%20Rochberg-Halton&amp;rft.date=1989-07&amp;rft.pages=146-170&amp;rft.spage=146&amp;rft.epage=170&amp;rft.issn=0008-8994%2C%201600-0498&amp;rft.language=en"></span>
+				</div>
 				<h4>Acknowledgments:</h4>
 				Geolocation is provided by <a href="http://freegeoip.net/">freegeoip.net</a>.
 				<br>
 				Local sunrise and sunset is provided by <a href="https://sunrise-sunset.org/">sunrise-sunset.org</a>.
+				<h4>Footnotes</h4>
+				<p id="fn1">1. The definition as provided by the <a href="https://physics.nist.gov/cuu/Units/current.html">National Institute of Standards and Technology</a>: "The second is the duration of 9,192,631,770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the cesium 133 atom."<a href="#fn1-ref">&#8617;</a></p>
+				<p id="fn2">2. Seasonal hours were not used at night because the sun is not in the sky at night.  Instead, the Babylonians used a system of "watches" at night which divided the night into <a href="#fn2-ref">&#8617;</a></p>
 			</p>
 		</div>
 		</center>
