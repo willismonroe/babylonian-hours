@@ -148,7 +148,7 @@ window.onload = function() {
         window.setInterval(function() {
 
             if (locationError == true) {
-                document.getElementById('error') = "Error: Disable Adblocker";
+                document.getElementById('error').innerHTML = "Location Error: Disable your Adblocker";
                 return;
             }
 
