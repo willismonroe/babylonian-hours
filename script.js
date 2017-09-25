@@ -25,7 +25,7 @@ function toMinutes(hours, minutes) {
 
 function getGeoIp() {
     let url = 'https://freegeoip.net/json/'
-    fetch(url)
+    fetch(url, { headers: {} })
         .then(
             function(response) {
                 if (response.status !== 200) {
@@ -54,7 +54,7 @@ function getSunriseSunset() {
     url = url + '?lat=' + locationData.latitude;
     url = url + '&lng=' + locationData.longitude;
     url = url + '&formatted=0';
-    fetch(url)
+    fetch(url, { headers: {} })
         .then(
             function(response) {
                 if (response.status !== 200) {
