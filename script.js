@@ -1,61 +1,53 @@
-let locationData = {
-    latitude: '',
-    longitude: '',
-}
+/*jslint es6 */
 
 let riseSet = {
-    sunrise: '',
-    sunset: '',
-}
+    sunrise: "",
+    sunset: ""
+};
 
 let babylonianDay = {
-    lengthOfDayHour: '',
-    numberOfSecondsinDay: '',
+    lengthOfDayHour: "",
+    numberOfSecondsinDay: "",
     dayHours: [],
-    nightHours: [],
+    nightHours: []
+};
 
-}
-
-locationError = false;
+let locationError = false;
 
 function round(value, decimals) {
-  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+    "use strict";
+    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
 
 function getGeoIp() {
-    let url = 'https://freegeoip.net/json/'
-    fetch(url, {
-            headers: {}
-        })
+    "use strict";
+    let url = "https://freegeoip.net/json/";
+    fetch(url, {headers: {}})
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log("Looks like there was a problem: " + response.status);
                     return;
                 }
                 //console.log(response);
-                response.json().then(function(data) {
-                    //console.log(data);
-                    locationData.latitude = data.latitude;
-                    locationData.longitude = data.longitude;
+                response.json().then(function (data) {
                     console.log("Data for: " + data.city + ", " + data.country_name);
-
-                    getSunriseSunset();
+                    getSunriseSunset(data.latitude, data.longitude);
                 });
             }
         )
         .catch(function(err) {
-            console.log('Location Fetch Error', err);
+            console.log("Location Fetch Error", err);
             locationError = true;
         });
 
 }
 
-function getSunriseSunset() {
-    let url = 'https://api.sunrise-sunset.org/json';
-    url = url + '?lat=' + locationData.latitude;
-    url = url + '&lng=' + locationData.longitude;
-    url = url + '&formatted=0';
+function getSunriseSunset(lat, long) {
+    let url = "https://api.sunrise-sunset.org/json";
+    url = url + "?lat=" + lat; //locationData.latitude;
+    url = url + "&lng=" + long; //locationData.longitude;
+    url = url + "&formatted=0";
     fetch(url, {
             headers: {}
         })
@@ -78,7 +70,7 @@ function getSunriseSunset() {
             }
         )
         .catch(function(err) {
-            console.log('Sunrise/Sunset Fetch Error', err);
+            console.log("Sunrise/Sunset Fetch Error", err);
         });
 }
 
@@ -89,11 +81,11 @@ function computeBabylonianTime() {
     babylonianDay.lDayHour = babylonianDay.lDay / 12;
     babylonianDay.lNightHour = babylonianDay.lNight / 12;
     hour = riseSet.sunrise;
-    for (var i = 0; i < 12; i++) {
+    for (i = 0; i < 12; i++) {
         if (i < 6) {
-            part = 'ASR';
+            part = "ASR";
         } else {
-            part = 'BST';
+            part = "BST";
         }
         babylonianDay.dayHours[i] = {
             realtime: hour,
@@ -102,16 +94,16 @@ function computeBabylonianTime() {
             name: i.toString(),
             ush: Math.floor(babylonianDay.lDayHour / 240000),
             gar: Math.floor(babylonianDay.lDayHour / 240000) * 60,
-            part: part,
+            part: part
         };
         hour = new Date(hour.getTime() + babylonianDay.lDayHour);
-    };
+    }
     hour = riseSet.sunset;
-    for (var i = 0; i < 12; i++) {
+    for (i = 0; i < 12; i++) {
         if (i < 6) {
-            part = 'AST';
+            part = "AST";
         } else {
-            part = 'BSR';
+            part = "BSR";
         }
         babylonianDay.nightHours[i] = {
             realtime: hour,
@@ -120,14 +112,14 @@ function computeBabylonianTime() {
             name: i.toString(),
             ush: Math.floor(babylonianDay.lNightHour / 240000),
             gar: Math.floor(babylonianDay.lNightHour / 240000) * 60,
-            part: part,
+            part: part
         };
         hour = new Date(hour.getTime() + babylonianDay.lNightHour);
-    };
+    }
 
-    document.getElementById('lDayHour').innerHTML = round(babylonianDay.lDayHour / 60000, 2);
-    document.getElementById('lNightHour').innerHTML = round(babylonianDay.lNightHour / 60000, 2);
-    document.getElementById('numberOfUsh').innerHTML = babylonianDay.dayHours[0].ush;
+    document.getElementById("lDayHour").innerHTML = round(babylonianDay.lDayHour / 60000, 2);
+    document.getElementById("lNightHour").innerHTML = round(babylonianDay.lNightHour / 60000, 2);
+    document.getElementById("numberOfUsh").innerHTML = babylonianDay.dayHours[0].ush;
 
     console.log("Done setting up!");
 }
@@ -140,57 +132,54 @@ setup();
 
 
 window.onload = function() {
+    hour = "00";
+    ush = "00";
+    gar = "00";
+    part = "...";
 
-        hour = "00";
-        ush = "00";
-        gar = "00";
-        part = "...";
+    window.setInterval(function() {
 
-        window.setInterval(function() {
+        if (locationError == true) {
+            document.getElementById("error").innerHTML = "Location Error: Disable your Adblocker";
+            return;
+        }
 
-            if (locationError == true) {
-                document.getElementById('error').innerHTML = "Location Error: Disable your Adblocker";
-                return;
-            }
+        // Get "now"
+        d = new Date();
 
-            // Get 'now'
-            d = new Date();
+        // We need to find out if it"s day or night
+        if (riseSet.sunrise - d < 0 && riseSet.sunset - d > 0) {
+            daytime = true;
+            // Now we need to find the hour we"re in
+            for (i = 0; i < babylonianDay.dayHours.length; i++) {
+                if (d - babylonianDay.dayHours[i].realtime < babylonianDay.lDayHour) {
+                    part = babylonianDay.dayHours[i].part;
+                    ush = Math.floor((d - babylonianDay.dayHours[i].realtime) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].ush));
+                    // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
+                    gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
+                    hour = i;
 
-            // We need to find out if it's day or night
-            if (riseSet.sunrise - d < 0 && riseSet.sunset - d > 0) {
-                daytime = true;
-                // Now we need to find the hour we're in
-                for (var i = 0; i < babylonianDay.dayHours.length; i++) {
-                    if (d - babylonianDay.dayHours[i].realtime < babylonianDay.lDayHour) {
-                        part = babylonianDay.dayHours[i].part;
-                        ush = Math.floor((d - babylonianDay.dayHours[i].realtime) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].ush));
-                        // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
-                        gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
-                        hour = i;
-
-                        if (hour < 10) {
-                            hour = "0" + hour.toString();
-                        }
-                        if (ush < 10) {
-                            ush = "0" + ush.toString();
-                        }
-                        if (gar < 10) {
-                            gar = "0" + gar.toString();
-                        }
-                        break;
+                    if (hour < 10) {
+                        hour = "0" + hour.toString();
                     }
+                    if (ush < 10) {
+                        ush = "0" + ush.toString();
+                    }
+                    if (gar < 10) {
+                        gar = "0" + gar.toString();
+                    }
+                    break;
                 }
-
-            } else {
-                daytime = false;
-
             }
-            document.getElementById("hour").innerHTML = hour;
-            document.getElementById("ush").innerHTML = ush;
-            document.getElementById("gar").innerHTML = gar;
-            document.getElementById("part").innerHTML = part;
-        }, 500);
 
-    }
-    // Easier solution just figure out what the Bab-time is now... then figure out what the interval should
-    // be and set it to that, and then do normal clock logic and forget checking any built-in table.
+        } else {
+            daytime = false;
+
+        }
+        document.getElementById("hour").innerHTML = hour;
+        document.getElementById("ush").innerHTML = ush;
+        document.getElementById("gar").innerHTML = gar;
+        document.getElementById("part").innerHTML = part;
+    }, 500);
+
+}
