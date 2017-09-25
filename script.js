@@ -24,7 +24,7 @@ function toMinutes(hours, minutes) {
 }
 
 function getGeoIp() {
-    let url = 'http://freegeoip.net/json/'
+    let url = 'https://freegeoip.net/json/'
     fetch(url)
         .then(
             function(response) {
