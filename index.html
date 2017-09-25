@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Babylonian Hours</title>
+		<script src="sketch.js"></script>
+		<style>
+		#clock {
+			font-family: 'Droid Sans Mono', monospace;
+		}
+		#time {
+			font-size: 6em;
+		}
+		#part {
+			font-size: 3em;
+		}
+		#desc {
+			padding-left: 30%;
+			padding-right: 30%;
+			padding-top: 100px;
+			text-align: left;
+			color: gray;
+		}
+		</style>
+	</head>
+	<body>
+		<!-- 		<p>Has the pace of modern life got you down... try telling time the Babylonian way!</p> -->
+		<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet">
+		<center>
+		<div id="clock">
+			<span id="time"><span id="hour">00</span>:<span id="ush">00</span>:<span id="gar">00</span></span>   <span id="part">...</span>
+		</div>
+		<div id="desc">
+			<p>
+				<h4>What is this?</h4>
+				<br>
+				This clock shows you your local time computed using a Babylonian system of reckoning.
+				<h4>Acknowledgments:</h4>
+				Geolocation is provided by <a href="http://freegeoip.net/">freegeoip.net</a>.
+				<br>
+				Local sunrise and sunset is provided by <a href="https://sunrise-sunset.org/">sunrise-sunset.org</a>.
+			</p>
+		</div>
+		</center>
+	</body>
+</html>
