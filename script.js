@@ -90,7 +90,6 @@ function computeBabylonianTime() {
     babylonianDay.lNightHour = babylonianDay.lNight / 12;
     hour = riseSet.sunrise;
     for (var i = 0; i < 12; i++) {
-        hour = new Date(hour.getTime() + babylonianDay.lDayHour);
         if (i < 6) {
             part = 'ASR';
         } else {
@@ -105,10 +104,10 @@ function computeBabylonianTime() {
             gar: Math.floor(babylonianDay.lDayHour / 240000) * 60,
             part: part,
         };
+        hour = new Date(hour.getTime() + babylonianDay.lDayHour);
     };
     hour = riseSet.sunset;
     for (var i = 0; i < 12; i++) {
-        hour = new Date(hour.getTime() + babylonianDay.lNightHour);
         if (i < 6) {
             part = 'AST';
         } else {
@@ -123,6 +122,7 @@ function computeBabylonianTime() {
             gar: Math.floor(babylonianDay.lNightHour / 240000) * 60,
             part: part,
         };
+        hour = new Date(hour.getTime() + babylonianDay.lNightHour);
     };
 
     document.getElementById('lDayHour').innerHTML = round(babylonianDay.lDayHour / 60000, 2);
