@@ -22,17 +22,19 @@ function round(value, decimals) {
 function getGeoIp() {
     "use strict";
     let url = "https://freegeoip.net/json/";
-    fetch(url, {headers: {}})
+    fetch(url, {
+            headers: {}
+        })
         .then(
-            function (response) {
+            function(response) {
                 if (response.status !== 200) {
                     console.log("Looks like there was a problem: " + response.status);
                     return;
                 }
                 //console.log(response);
-                response.json().then(function (data) {
+                response.json().then(function(data) {
                     console.log("Data for: " + data.city + ", " + data.country_name);
-                    getSunriseSunset(data.latitude, data.longitude);
+                    getSunriseSunset(data.latitude, data.longitude, "today");
                 });
             }
         )
@@ -43,10 +45,12 @@ function getGeoIp() {
 
 }
 
-function getSunriseSunset(lat, long) {
+function getSunriseSunset(lat, long, date) {
+    let d = new Date();
     let url = "https://api.sunrise-sunset.org/json";
     url = url + "?lat=" + lat; //locationData.latitude;
     url = url + "&lng=" + long; //locationData.longitude;
+    url = url + "&date=" + d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate()
     url = url + "&formatted=0";
     fetch(url, {
             headers: {}
@@ -174,6 +178,27 @@ window.onload = function() {
 
         } else {
             daytime = false;
+            // Now we need to find the hour we"re in
+            for (i = 0; i < babylonianDay.nightHours.length; i++) {
+                if (d - babylonianDay.nightHours[i].realtime < babylonianDay.lNightHour) {
+                    part = babylonianDay.nightHours[i].part;
+                    ush = Math.floor((d - babylonianDay.nightHours[i].realtime) / (babylonianDay.lNightHour / babylonianDay.nightHours[i].ush));
+                    // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
+                    gar = Math.floor((d - (babylonianDay.nightHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lNightHour / babylonianDay.nightHours[i].ush))) / (babylonianDay.lNightHour / babylonianDay.nightHours[i].gar))
+                    hour = i;
+
+                    if (hour < 10) {
+                        hour = "0" + hour.toString();
+                    }
+                    if (ush < 10) {
+                        ush = "0" + ush.toString();
+                    }
+                    if (gar < 10) {
+                        gar = "0" + gar.toString();
+                    }
+                    break;
+                }
+            }
 
         }
         document.getElementById("hour").innerHTML = hour;
