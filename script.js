@@ -43,7 +43,7 @@ function getGeoIp() {
                     locationData.longitude = data.longitude;
 
                     let d = new Date();
-                    let date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+                    let date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 
                     getSunriseSunset(locationData.latitude, locationData.longitude, date);
                 });
@@ -139,6 +139,8 @@ function computeBabylonianTime() {
     document.getElementById("lDayHour").innerHTML = round(babylonianDay.lDayHour / 60000, 2);
     document.getElementById("lNightHour").innerHTML = round(babylonianDay.lNightHour / 60000, 2);
     document.getElementById("numberOfUsh").innerHTML = babylonianDay.dayHours[0].ush;
+    document.getElementById("numberOfUsh2").innerHTML = babylonianDay.dayHours[0].ush;
+    document.getElementById("numberOfUsh3").innerHTML = babylonianDay.dayHours[0].ush;
 
     console.log("Done setting up!");
 }
@@ -166,6 +168,10 @@ window.onload = function() {
         // Get "now"
         d = new Date();
 
+        // Compute new times if we've reached the end of day or night
+
+
+
         // We need to find out if it"s day or night
         if (riseSet.sunrise - d < 0 && riseSet.sunset - d > 0) {
             daytime = true;
@@ -177,10 +183,7 @@ window.onload = function() {
                     gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                     hour = i;
 
-                    if (ush > babylonianDay.dayHours[0].ush + 1) {
-                        console.log("Need to grab today's sunrise information");
-                        getSunriseSunset(locationData.latitude, locationData.longitude, "today");
-                    }
+
 
                     if (hour < 10) {
                         hour = "0" + hour.toString();
@@ -224,6 +227,9 @@ window.onload = function() {
                         gar = "0" + gar.toString();
                     }
                     break;
+                } else if (d - babylonianDay.nightHours[i].realtime > babylonianDay.lNightHour) {
+                    console.log("Need to grab today's sunrise information");
+                    getSunriseSunset(locationData.latitude, locationData.longitude, "today");
                 }
             }
 

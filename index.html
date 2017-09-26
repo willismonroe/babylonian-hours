@@ -4,7 +4,7 @@
 		<script src="script.js"></script>
 		<style>
 		#clock {
-			font-family: 'Droid Sans Mono', monospace;
+			font-family: "Droid Sans Mono", monospace;
 		}
 		#time {
 			font-size: 6em;
@@ -17,7 +17,7 @@
 			padding-right: 30%;
 			padding-top: 100px;
 			text-align: left;
-			color: gray;
+			color: grey;
 		}
 		</style>
 	</head>
@@ -30,31 +30,37 @@
 			<p id="error"></p>
 		</div>
 		<div id="desc">
-			<p>
 				<h4>What is this?</h4>
-				<br>
-				Our units of time are defined by physical realities which do not change with the seasons.<a id="fn1-ref" href="#fn1">[1]</a>  That means that an hour is always the same length regardless of day, month, or year.  However, this form of time is dependant of technological developments which allow for precise measurements of the passage of time.  Prior to accurate time pieces, the passage of time through the day was often reckoned by a system of <em>seasonal hours</em>.  The basic method is to divide daylight into a number of equal length hours that can be roughly reckoned based on the position of sun in the sky.  Many different cultures and groups throughout history have made use of seasonal hours.
-				<br>
-				<br>
-				This clock shows you your local time computed using a Babylonian system of seasonal hours.  The are two different types of units of time in the Babylonian system, the first is set by homogenous phenomena, either astronomical (appearance of a star) or physical (water clock), the second is a seasonal system whereby the length of an hour changes depending on the length of daylight.  This clock makes use of both types of units.
-				<br>
-				<br>
-				The first number is the hour (<em>simanu</em>) of the day or night, the second unit is measured in U&#352;, the third in GAR.
+				<p>This clock uses a system of time calculation from 2,500 years ago used by the Babylonians in ancient Mesopotamia.  The time is based on the concept of a <em>seasonal hour</em>, i.e. the length of an hour is seasonal and depends on the duration of daylight in your current location.  This website grabs your location and computes your local time in this Babylonian system.  Obviously, the ancient Babylonians did not have digital clocks, so this clock takes a few liberties with how it displays the data, if you want to know more about the calculations and ancient Babylonian units of time continue reading below.</p>
+
+				<p>If you're just curious how to read this clock, the first number is the hour past sunrise or sunset (depending on day or night), the second is a unit of time called an <font style="font-variant: small-caps">u&scaron;</font> which counts up from zero to a maximum of <span id="numberOfUsh"></span>, the third number is a unit called <font style="font-variant: small-caps">gar</font> for which there are 60 in an <font style="font-variant: small-caps">u&scaron;</font>, the acronym at the end tells you what quarter of the 24-hour day it is.</p>
+
+				<h4>Background</h4>
+
+				<p>Our units of time are defined by physical realities which do not change with the seasons.<a id="fn1-ref" href="#fn1">[1]</a>  That means that an hour is always the same length regardless of day, month, or year.  However, this form of time is dependant of technological developments which allow for precise measurements of the passage of time.  Prior to accurate time pieces, the passage of time through the day was often reckoned by a system of <em>seasonal hours</em>.  The basic method is to divide daylight into a number of equal length hours that can be roughly reckoned based on the position of sun in the sky.  Many different cultures and groups throughout history have made use of seasonal hours.</p>
+
+				<p>This clock shows you your local time computed using a Babylonian system of seasonal hours.  The are two different types of units of time in the Babylonian system, the first is set by homogenous phenomena, either astronomical (appearance of a star) or physical (water clock), the second is a seasonal system whereby the length of an hour changes depending on the length of daylight.  This clock makes use of both types of units.</p>
+
+				<p>The first number is the hour (<em>simanu</em> in Akkadian) of the day or night, the second unit is measured in <font style="font-variant: small-caps">u&scaron;</font>, the third in <font style="font-variant: small-caps">gar</font>.<a id="fn2-ref" href="#fn2">[2]</a>
 				<ul>
-					<li>The length of a <em>simanu</em> (seasonal hour) is determined by dividing the length of local daylight by 12, or in the case of a night hour, dividing nightime by 12.<a id="fn2-ref" href="#fn2">[2]</a>  For your current location a seasonal daylight hour is equal to <span id="lDayHour"></span> minutes and a seasonal nighttime hour is equal to <span id="lNightHour"></span> minutes.</li>
-					<li>The length of an U&#352; is set at aproximately four minutes and can be measured by a water clock.  For your current location there are <span id="numberOfUsh"></span> U&#352; in a seasonal daylight hour.</li>
-					<li>The length of a GAR is set at aproximately four seconds (1/60th of an U&#352;)</li>
+					<li>The length of a <em>simanu</em> (seasonal hour) is determined by dividing the length of local daylight by 12, or in the case of a night hour, dividing nightime by 12.<a id="fn3-ref" href="#fn3">[3]</a>  For your current location a seasonal daylight hour is equal to <span id="lDayHour"></span> minutes and a seasonal nighttime hour is equal to <span id="lNightHour"></span> minutes.</li>
+					<li>The length of an <font style="font-variant: small-caps">u&scaron;</font>; is set at approximately four minutes and can be measured by a water clock.  For your current location there are <span id="numberOfUsh2"></span> u&scaron; in a seasonal daylight hour.</li>
+					<li>The length of a <font style="font-variant: small-caps">gar</font> is set at approximately four seconds (1/60th of an u&scaron;)</li>
 				</ul>
-				Finally, I include a short acronym much like our AM/PM.  The Babylonians divided the day into four parts defined by the sunrise and sunset.  They are:
+				</p>
+
+				<p>Finally, I include a short acronym much like our AM/PM.  The Babylonians divided the day into four parts defined by the sunrise and sunset.  They are:
 				<ul>
 					<li>ASR: after sunrise</li>
 					<li>BST: before sunset</li>
 					<li>AST: after sunset</li>
 					<li>BSR: before sunrise</li>
 				</ul>
-				This clock is not quite accurate, because any reckoning done by seasonal hours would likely not involve smaller units of time.  But in order to create a more familiar clock I included the smaller units (U&#352; and GAR) as well.  A hypothetical ancient Babylonian could use the U&#352; and GAR measured by a water clock to determine the next seasonal hour.  Also it's important to note that the first unit in this clock has a range of 0-11 (like our own clocks) and the last unit also has a familiar range (0-59) the middle unit (U&#352;) differs according to the length of the first unit.  To put it simply, do not use this clock for your normal day-to-day time calculation needs.
-				<br>
-				<br>
+				</p>
+
+				<p>This clock is not quite accurate, because any reckoning done by seasonal hours would likely not involve smaller units of time.  But in order to create a more familiar clock I included the smaller units (<font style="font-variant: small-caps">u&scaron;</font> and <font style="font-variant: small-caps">gar</font>) as well.  A hypothetical ancient Babylonian could use the <font style="font-variant: small-caps">u&scaron;</font> and <font style="font-variant: small-caps">gar</font> measured by a water clock to determine the next seasonal hour.  Also it"s important to note that the first unit in this clock has a range of 0-11 (like our own clocks) and the last unit also has a familiar range (0-59) the middle unit (<font style="font-variant: small-caps">u&scaron;</font>) differs according to the length of the seasonal hour, from 0 to a maximum of <span id="numberOfUsh3"></span>.  To put it simply, do not use this clock for your normal day-to-day time calculation needs.</p>
+
+				<p>-Willis Monroe (<a href="https://twitter.com/willismonroe">@willismonroe</a>, <a href="mailto:willismonroe@gmail.com">willismonroe@gmail.com</a>)</p>
 
 				<h4>Bibliography:</h4>
 				<div class="csl-bib-body" style="line-height: 1.35; margin-left: 2em; text-indent:-2em;">
@@ -64,12 +70,15 @@
 					<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1111%2Fj.1600-0498.1989.tb00843.x&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Babylonian%20Seasonal%20Hours&amp;rft.jtitle=Centaurus&amp;rft.volume=32&amp;rft.issue=2&amp;rft.aufirst=F.&amp;rft.aulast=Rochberg-Halton&amp;rft.au=F.%20Rochberg-Halton&amp;rft.date=1989-07&amp;rft.pages=146-170&amp;rft.spage=146&amp;rft.epage=170&amp;rft.issn=0008-8994%2C%201600-0498&amp;rft.language=en"></span>
 				</div>
 				<h4>Acknowledgments:</h4>
+				<p>
 				Geolocation is provided by <a href="http://freegeoip.net/">freegeoip.net</a>.
 				<br>
 				Local sunrise and sunset is provided by <a href="https://sunrise-sunset.org/">sunrise-sunset.org</a>.
+				</p>
 				<h4>Footnotes</h4>
 				<p id="fn1">1. The definition as provided by the <a href="https://physics.nist.gov/cuu/Units/current.html">National Institute of Standards and Technology</a>: "The second is the duration of 9,192,631,770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the cesium 133 atom."<a href="#fn1-ref">&#8617;</a></p>
-				<p id="fn2">2. Seasonal hours were not used at night because the sun is not in the sky at night.  Instead, the Babylonians used a system of "watches" at night which divided the night into <a href="#fn2-ref">&#8617;</a></p>
+				<p id="fn2">2. It's standard convention to represent Akkadian words in <em>italics</em> and Sumerian words or signs in <font style="font-variant: small-caps">small-caps</font>.<a href="#fn2-ref">&#8617;</a></p>
+				<p id="fn3">3. Seasonal hours were not used at night because the sun is not in the sky at night.  Instead, the Babylonians used a system of "watches" at night which divided the night into three roughly equal parts.<a href="#fn3-ref">&#8617;</a></p>
 			</p>
 		</div>
 		</center>
