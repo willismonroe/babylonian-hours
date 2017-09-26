@@ -74,6 +74,11 @@ function getSunriseSunset(lat, long, date) {
                 //console.log(response);
                 response.json().then(function(data) {
                     //console.log(data);
+                    sunrise = data.results.sunrise;
+                    sunset = data.results.sunset;
+
+
+
                     riseSet.sunrise = new Date(data.results.sunrise);
                     riseSet.sunset = new Date(data.results.sunset);
                     console.log("Sunrise: " + riseSet.sunrise);
@@ -172,6 +177,11 @@ window.onload = function() {
                     gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                     hour = i;
 
+                    if (ush > babylonianDay.dayHours[0].ush) {
+                        console.log("Need to grab today's sunrise information");
+                        getSunriseSunset(locationData.latitude, locationData.longitude, "today");
+                    }
+
                     if (hour < 10) {
                         hour = "0" + hour.toString();
                     }
@@ -200,6 +210,7 @@ window.onload = function() {
                     // Check if we're past midnight and have a negative ush
 
                     if (ush < 0) {
+                        console.log("Need to grab yesterday's sunset information.");
                         getSunriseSunset(locationData.latitude, locationData.longitude, "yesterday")
                     }
 
