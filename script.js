@@ -177,7 +177,7 @@ window.onload = function() {
                     gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                     hour = i;
 
-                    if (ush > babylonianDay.dayHours[0].ush) {
+                    if (ush > babylonianDay.dayHours[0].ush + 1) {
                         console.log("Need to grab today's sunrise information");
                         getSunriseSunset(locationData.latitude, locationData.longitude, "today");
                     }
