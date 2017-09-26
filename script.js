@@ -1,5 +1,10 @@
 /*jslint es6 */
 
+let locationData = {
+    latitude: 0,
+    longitude: 0
+};
+
 let riseSet = {
     sunrise: "",
     sunset: ""
@@ -34,7 +39,13 @@ function getGeoIp() {
                 //console.log(response);
                 response.json().then(function(data) {
                     console.log("Data for: " + data.city + ", " + data.country_name);
-                    getSunriseSunset(data.latitude, data.longitude, "today");
+                    locationData.latitude = data.latitude;
+                    locationData.longitude = data.longitude;
+
+                    let d = new Date();
+                    let date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+
+                    getSunriseSunset(locationData.latitude, locationData.longitude, date);
                 });
             }
         )
@@ -46,11 +57,10 @@ function getGeoIp() {
 }
 
 function getSunriseSunset(lat, long, date) {
-    let d = new Date();
     let url = "https://api.sunrise-sunset.org/json";
     url = url + "?lat=" + lat; //locationData.latitude;
     url = url + "&lng=" + long; //locationData.longitude;
-    url = url + "&date=" + d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate()
+    url = url + "&date=" + date;
     url = url + "&formatted=0";
     fetch(url, {
             headers: {}
@@ -159,7 +169,6 @@ window.onload = function() {
                 if (d - babylonianDay.dayHours[i].realtime < babylonianDay.lDayHour) {
                     part = babylonianDay.dayHours[i].part;
                     ush = Math.floor((d - babylonianDay.dayHours[i].realtime) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].ush));
-                    // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
                     gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                     hour = i;
 
@@ -186,6 +195,13 @@ window.onload = function() {
                     // (new Date() - (babylonianDay.dayHours[3].realtime.getTime() + Math.floor(ush * (babylonianDay.lDayHour / babylonianDay.dayHours[3].ush)))) / 4271
                     gar = Math.floor((d - (babylonianDay.nightHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lNightHour / babylonianDay.nightHours[i].ush))) / (babylonianDay.lNightHour / babylonianDay.nightHours[i].gar))
                     hour = i;
+
+
+                    // Check if we're past midnight and have a negative ush
+
+                    if (ush < 0) {
+                        getSunriseSunset(locationData.latitude, locationData.longitude, "yesterday")
+                    }
 
                     if (hour < 10) {
                         hour = "0" + hour.toString();
