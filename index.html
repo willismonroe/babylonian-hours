@@ -6,9 +6,12 @@
 		#clock {
 			font-family: "Droid Sans Mono", monospace;
 		}
-		#time {
-			font-size: 6em;
-		}
+		#hour {
+            font-size: 6em;
+        }
+        #ush, #gar {
+            font-size: 5em;
+        }
 		#part {
 			font-size: 3em;
 		}
@@ -26,14 +29,14 @@
 		<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet">
 		<center>
 		<div id="clock">
-			<span id="time"><span id="hour">00</span>:<span id="ush">00</span>:<span id="gar">00</span></span>   <span id="part">...</span>
+            <span id="time"><span id="hour">00</span><font style="font-size: 4em">h </font> <span id="ush">00</span><font style="font-size: 5em;">:</font><span id="gar">00</span></span>   <span id="part">...</span>
 			<p id="error"></p>
 		</div>
 		<div id="desc">
 				<h4>What is this?</h4>
 				<p>This clock uses a system of time calculation from 2,500 years ago used by the Babylonians in ancient Mesopotamia.  The time is based on the concept of a <em>seasonal hour</em>, i.e. the length of an hour is seasonal and depends on the duration of daylight in your current location.  This website grabs your location and computes your local time in this Babylonian system (here's an example of a <a href="http://cdli.ucla.edu/dl/photo/P237525.jpg">cuneiform tablet</a> from ancient Mesopotamia calculating seasonal hours).  Obviously, the ancient Babylonians did not have digital clocks, so this clock takes a few liberties with how it displays the data, if you want to know more about the calculations and ancient Babylonian units of time continue reading below.</p>
 
-				<p>If you're just curious how to read this clock, the first number is the hour past sunrise or sunset (depending on day or night), the second is a unit of time called an <font style="font-variant: small-caps">u&scaron;</font> which counts up from zero to a maximum of <span id="numberOfUsh"></span>, the third number is a unit called <font style="font-variant: small-caps">gar</font> for which there are 60 in an <font style="font-variant: small-caps">u&scaron;</font>, the acronym at the end tells you what quarter of the 24-hour day it is.</p>
+				<p>If you're just curious how to read this clock, the first number is the hour past sunrise or sunset (depending on day or night), the second is a unit of time called an <font style="font-variant: small-caps">u&scaron;</font> which counts up from zero to a maximum of <span id="numberOfUsh"></span> for your current location, the third number is a unit called <font style="font-variant: small-caps">gar</font> for which there are 60 in an <font style="font-variant: small-caps">u&scaron;</font>, the acronym at the end tells you what quarter of the 24-hour day it is.</p>
 
 				<h4>Background</h4>
 

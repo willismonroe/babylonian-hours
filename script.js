@@ -12,7 +12,7 @@ let riseSet = {
 
 let babylonianDay = {
     lengthOfDayHour: "",
-    numberOfSecondsinDay: "",
+    numberOfSecondsInDay: "",
     dayHours: [],
     nightHours: []
 };
@@ -28,16 +28,16 @@ function getGeoIp() {
     "use strict";
     let url = "https://freegeoip.net/json/";
     fetch(url, {
-            headers: {}
-        })
+        headers: {}
+    })
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log("Looks like there was a problem: " + response.status);
                     return;
                 }
                 //console.log(response);
-                response.json().then(function(data) {
+                response.json().then(function (data) {
                     console.log("Data for: " + data.city + ", " + data.country_name);
                     locationData.latitude = data.latitude;
                     locationData.longitude = data.longitude;
@@ -49,7 +49,7 @@ function getGeoIp() {
                 });
             }
         )
-        .catch(function(err) {
+        .catch(function (err) {
             console.log("Location Fetch Error", err);
             locationError = true;
         });
@@ -63,20 +63,19 @@ function getSunriseSunset(lat, long, date) {
     url = url + "&date=" + date;
     url = url + "&formatted=0";
     fetch(url, {
-            headers: {}
-        })
+        headers: {}
+    })
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log("Looks like there was a problem: " + response.status);
                     return;
                 }
                 //console.log(response);
-                response.json().then(function(data) {
+                response.json().then(function (data) {
                     //console.log(data);
-                    sunrise = data.results.sunrise;
-                    sunset = data.results.sunset;
-
+                    let sunrise = data.results.sunrise;
+                    let sunset = data.results.sunset;
 
 
                     riseSet.sunrise = new Date(data.results.sunrise);
@@ -88,7 +87,7 @@ function getSunriseSunset(lat, long, date) {
                 });
             }
         )
-        .catch(function(err) {
+        .catch(function (err) {
             console.log("Sunrise/Sunset Fetch Error", err);
         });
 }
@@ -99,18 +98,18 @@ function computeBabylonianTime() {
     babylonianDay.lNight = 1000 * 60 * 60 * 24 - babylonianDay.lDay;
     babylonianDay.lDayHour = babylonianDay.lDay / 12;
     babylonianDay.lNightHour = babylonianDay.lNight / 12;
-    hour = riseSet.sunrise;
+    let hour = riseSet.sunrise;
     for (i = 0; i < 12; i++) {
+        let part = "BST";
         if (i < 6) {
             part = "ASR";
-        } else {
-            part = "BST";
         }
         babylonianDay.dayHours[i] = {
             realtime: hour,
             hour: hour.getHours(),
             minutes: hour.getMinutes(),
             name: i.toString(),
+            // TODO: Move ush and gar up to babylonianDay, rather than in each hour
             ush: Math.floor(babylonianDay.lDayHour / 240000),
             gar: Math.floor(babylonianDay.lDayHour / 240000) * 60,
             part: part
@@ -119,10 +118,9 @@ function computeBabylonianTime() {
     }
     hour = riseSet.sunset;
     for (i = 0; i < 12; i++) {
+        let part = "BSR";
         if (i < 6) {
             part = "AST";
-        } else {
-            part = "BSR";
         }
         babylonianDay.nightHours[i] = {
             realtime: hour,
@@ -152,29 +150,28 @@ function setup() {
 setup();
 
 
-window.onload = function() {
-    hour = "00";
-    ush = "00";
-    gar = "00";
-    part = "...";
+window.onload = function () {
+    let hour = "00";
+    let ush = "00";
+    let gar = "00";
+    let part = "...";
 
-    window.setInterval(function() {
+    window.setInterval(function () {
 
-        if (locationError == true) {
+        if (locationError === true) {
             document.getElementById("error").innerHTML = "Location Error: Disable your Adblocker";
             return;
         }
 
         // Get "now"
-        d = new Date();
+        let d = new Date();
 
         // Compute new times if we've reached the end of day or night
 
 
-
         // We need to find out if it"s day or night
         if (riseSet.sunrise - d < 0 && riseSet.sunset - d > 0) {
-            daytime = true;
+            let daytime = true;
             // Now we need to find the hour we"re in
             for (i = 0; i < babylonianDay.dayHours.length; i++) {
                 if (d - babylonianDay.dayHours[i].realtime < babylonianDay.lDayHour) {
@@ -182,7 +179,6 @@ window.onload = function() {
                     ush = Math.floor((d - babylonianDay.dayHours[i].realtime) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].ush));
                     gar = Math.floor((d - (babylonianDay.dayHours[i].realtime.getTime() + Math.floor(ush * babylonianDay.lDayHour / babylonianDay.dayHours[i].ush))) / (babylonianDay.lDayHour / babylonianDay.dayHours[i].gar))
                     hour = i;
-
 
 
                     if (hour < 10) {
@@ -237,4 +233,4 @@ window.onload = function() {
         document.getElementById("part").innerHTML = part;
     }, 500);
 
-}
+};
