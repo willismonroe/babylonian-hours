@@ -227,9 +227,6 @@ window.onload = function() {
                         gar = "0" + gar.toString();
                     }
                     break;
-                } else if (d - babylonianDay.nightHours[i].realtime > babylonianDay.lNightHour) {
-                    console.log("Need to grab today's sunrise information");
-                    getSunriseSunset(locationData.latitude, locationData.longitude, "today");
                 }
             }
 
