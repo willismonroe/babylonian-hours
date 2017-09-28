@@ -19,10 +19,10 @@ let babylonianDay = {
 
 let locationError = false;
 
-// function round(value, decimals) {
-//     "use strict";
-//     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
-// }
+function round(value, decimals) {
+    "use strict";
+    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+}
 
 function getGeoIp() {
     "use strict";
