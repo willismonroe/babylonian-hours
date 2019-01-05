@@ -58,10 +58,10 @@ function calculateSunriseSunset(lat, long) {
     J_transit = 2451545 + J_star + 0.0053*sin(M) - 0.0069*sin(2*L);
 
     // Declination of the Sun
-    δ = sin(sin(L) * sin(23.44));
+    D = sin(sin(L) * sin(23.44));
 
     // Hour angle
-    w = cos((sin(-0.83) - sin(lat) * sin(δ)) / (cos(lat) * cos(δ)));
+    w = cos((sin(-0.83) - sin(lat) * sin(D)) / (cos(lat) * cos(D)));
 
     // Calculate sunrise and sunset
     J_set = J_transit + (w / 360);
