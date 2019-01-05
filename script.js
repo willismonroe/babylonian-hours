@@ -35,6 +35,7 @@ function cos(angle) {
 }
 
 function calculateSunriseSunset(lat, long) {
+    console.log("Lat, long", lat, long);
     // Pulled from https://en.wikipedia.org/wiki/Sunrise_equation
 
     // Calculate current Julian Day
