@@ -24,9 +24,52 @@ function round(value, decimals) {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
 
+let rad = 180 / Math.PI;
+
+function sin(angle) {
+    return Math.sin(angle * rad);
+}
+
+function cos(angle) {
+    return Math.cos(angle * rad);
+}
+
+function calculateSunriseSunset(lat, long) {
+    // Pulled from https://en.wikipedia.org/wiki/Sunrise_equation
+
+    // Calculate current Julian Day
+    J_date = Math.floor((new Date().getTime() / 86400000) + 2440587.5);
+    n = J_date - 2451545.0 + 0.0008;
+
+    // Mean solar noon
+    J_star = n - long/360;
+
+    // Solar mean anomaly
+    M = (357.5291 + 0.98560028 * J_star) % 360;
+
+    // Equation of the Center
+    C = 1.9148*sin(M) + 0.0200*sin(2*M) + 0.0003*sin(3*M);
+
+    // Ecliptic longitude
+    λ = (M + C + 180 + 102.9372) % 360;
+
+    // Solar transit
+    J_transit = 2451545 + J_star + 0.0053*sin(M) - 0.0069*sin(2*λ);
+
+    // Declination of the Sun
+    δ = sin(sin(λ) * sin(23.44));
+
+    // Hour angle
+    w = cos((sin(-0.83) - sin(lat) * sin(δ)) / (cos(lat) * cos(δ)));
+
+    // Calculate sunrise and sunset
+    J_set = J_transit + (w / 360);
+    J_rise = J_transit - (w / 360);
+}
+
 function getGeoIp() {
     "use strict";
-    let url = "https://freegeoip.net/json/";
+    let url = "https://freegeoip.app/json/";
     fetch(url, {
         headers: {}
     })
