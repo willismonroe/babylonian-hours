@@ -52,10 +52,10 @@ function calculateSunriseSunset(lat, long) {
     C = 1.9148*sin(M) + 0.0200*sin(2*M) + 0.0003*sin(3*M);
 
     // Ecliptic longitude
-    λ = (M + C + 180 + 102.9372) % 360;
+    L = (M + C + 180 + 102.9372) % 360;
 
     // Solar transit
-    J_transit = 2451545 + J_star + 0.0053*sin(M) - 0.0069*sin(2*λ);
+    J_transit = 2451545 + J_star + 0.0053*sin(M) - 0.0069*sin(2*L);
 
     // Declination of the Sun
     δ = sin(sin(λ) * sin(23.44));
